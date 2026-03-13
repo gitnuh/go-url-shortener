@@ -186,8 +186,76 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 				w.Header().Set("Content-Type", "text/html")
 
 				link := "http://" + r.Host + "/" + s
-				fmt.Fprintln(w, "<h3>code already exists for this url</h3>")
-				fmt.Fprintln(w, "<a href='"+link+"'>"+link+"</a>")
+
+				fmt.Fprintln(w, `
+		<html>
+		<head>
+		<title>URL Shortener</title>
+		<style>
+		body{
+			margin:0;
+			height:100vh;
+			display:flex;
+			justify-content:center;
+			align-items:center;
+			background:linear-gradient(135deg,#3a7bd5,#8e44ad);
+			font-family:Arial, Helvetica, sans-serif;
+			color:white;
+		}
+		.container{
+			background:rgba(255,255,255,0.9);
+			padding:60px 80px;
+			border-radius:18px;
+			text-align:center;
+			box-shadow:0 15px 40px rgba(0,0,0,0.25);
+			width:500px;
+			max-width:90%;
+			color:#222;
+		}
+		h1{
+			font-size:40px;
+			font-weight:bold;
+			margin-bottom:20px;
+		}
+		a{
+			color:#4b63d1;
+			font-weight:bold;
+			text-decoration:none;
+		}
+		.success{
+			color:black;
+			font-weight:bold;
+			font-size:18px;
+			margin-bottom:20px;
+		}
+		.button{
+			margin-top:20px;
+			padding:12px 28px;
+			border:none;
+			border-radius:8px;
+			background:#5b6ee1;
+			color:white;
+			font-weight:bold;
+			cursor:pointer;
+			font-size:16px;
+			text-decoration:none;
+			display:inline-block;
+		}
+		.button:hover{
+			background:#8e44ad;
+		}
+		</style>
+		</head>
+		<body>
+		<div class="container">
+		<h1>URL Already Exists</h1>
+		<p class="success">A short code for this URL already exists:</p>
+		<a class="button" href="`+link+`">`+link+`</a><br><br>
+		<a href="/">Create Another Link</a>
+		</div>
+		</body>
+		</html>
+		`)
 				return
 			}
 
